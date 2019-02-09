@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="Calc.ViewModels.NarrowButtons"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Calc.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Assets/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid Name="ButtonGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4">
+                <Button Style="{StaticResource SmButton}" IsEnabled="{Binding HaveMemory.Value}"
+                        Name="_MemoryReset">
+                    MC
+                </Button>
+                <Button Style="{StaticResource SmButton}" IsEnabled="{Binding HaveMemory.Value}"
+                        Name="_MemoryRecovery">
+                    MR
+                </Button>
+                <Button Style="{StaticResource SmButton}" Name="_MemoryPlus">M+</Button>
+                <Button Style="{StaticResource SmButton}" Name="_MemoryMinus">M-</Button>
+                <Button Style="{StaticResource SmButton}" Name="_MemorySave">MS</Button>
+                <Button Name="MemoryList" Style="{StaticResource SmButton}" IsEnabled="{Binding HaveMemory.Value}">
+                    <TextBlock>
+                        <Run>M</Run><Run FontSize="8">&#x2bc6;</Run>
+                    </TextBlock>
+                </Button>
+            </StackPanel>
+
+            <Button Style="{StaticResource OpButton}" Grid.Row="1" Grid.Column="0" Name="_Percent">%</Button>
+            <Button Style="{StaticResource OpButton}" Grid.Row="1" Grid.Column="1" Name="_Sqrt">&#x221a;</Button>
+            <Button Style="{StaticResource OpButton}" Grid.Row="1" Grid.Column="2" Name="_Power">&#x1d712;&#xb2;</Button>
+            <Button Style="{StaticResource OpButton}" Grid.Row="1" Grid.Column="3" Name="_Fraction">&#x215F;&#x1d712;</Button>
+
+            <Button Style="{StaticResource OpButton}" Grid.Row="2" Grid.Column="0" Name="_ClearInput">CE</Button>
+            <Button Style="{StaticResource OpButton}" Grid.Row="2" Grid.Column="1" Name="_Clear">C</Button>
+            <Button Style="{StaticResource OpButton}" Grid.Row="2" Grid.Column="2" Name="_Backspace">&#x232b;</Button>
+            <Button Style="{StaticResource MainButton}" Grid.Row="2" Grid.Column="3" Name="_Division">&#xf7;</Button>
+
+            <Button Style="{StaticResource DigitButton}" Grid.Row="3" Grid.Column="0" Name="_Num7">7</Button>
+            <Button Style="{StaticResource DigitButton}" Grid.Row="3" Grid.Column="1" Name="_Num8">8</Button>
+            <Button Style="{StaticResource DigitButton}" Grid.Row="3" Grid.Column="2" Name="_Num9">9</Button>
+            <Button Style="{StaticResource MainButton}" Grid.Row="3" Grid.Column="3" Name="_Product">&#x2715;</Button>
+
+            <Button Style="{StaticResource DigitButton}" Grid.Row="4" Grid.Column="0" Name="_Num4">4</Button>
+            <Button Style="{StaticResource DigitButton}" Grid.Row="4" Grid.Column="1" Name="_Num5">5</Button>
+            <Button Style="{StaticResource DigitButton}" Grid.Row="4" Grid.Column="2" Name="_Num6">6</Button>
+            <Button Style="{StaticResource MainButton}" Grid.Row="4" Grid.Column="3" Name="_Minus">-</Button>
+
+            <Button Style="{StaticResource DigitButton}" Grid.Row="5" Grid.Column="0" Name="_Num1">1</Button>
+            <Button Style="{StaticResource DigitButton}" Grid.Row="5" Grid.Column="1" Name="_Num2">2</Button>
+            <Button Style="{StaticResource DigitButton}" Grid.Row="5" Grid.Column="2" Name="_Num3">3</Button>
+            <Button Style="{StaticResource MainButton}" Grid.Row="5" Grid.Column="3" Name="_Plus">+</Button>
+
+            <Button Style="{StaticResource NonDigitButton}" Grid.Row="6" Grid.Column="0" Name="_SwitchSign">
+                &#x2213;
+            </Button>
+            <Button Style="{StaticResource DigitButton}" Grid.Row="6" Grid.Column="1" Name="_Num0">0</Button>
+            <Button Style="{StaticResource NonDigitButton}" Grid.Row="6" Grid.Column="2" Name="_Dot">,</Button>
+            <Button Style="{StaticResource MainButton}" Grid.Row="6" Grid.Column="3" Name="_Enter">=</Button>
+        </Grid>
+    </Grid>
+</UserControl>
