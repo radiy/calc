@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
@@ -16,6 +17,9 @@ namespace Calc
 		{
 			try
 			{
+#if CORE
+				Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+#endif
 				Window window;
 				//we use undocumented function for window effect, tested only on windows 10
 				if (Environment.OSVersion.Version < new Version(6, 2))

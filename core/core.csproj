@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Wpf">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;CORE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.DesktopUI" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\app\**\*.cs" />
+    <Compile Remove="..\app\obj\**" />
+    <Compile Remove="..\app\Properties\AssemblyInfo.cs" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="2.0.1" />
+    <PackageReference Include="system.reactive" Version="4.1.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\app\Assets\Icon.png" Link="Assets\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="..\app\MainWindow.xaml" Link="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="..\app\Assets\Styles.xaml" Link="Assets\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="..\app\ViewModels\NarrowButtons.xaml" Link="ViewModels\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="..\app\ViewModels\StdCalcView.xaml" Link="ViewModels\StdCalcView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="..\app\ViewModels\WideButtons.xaml" Link="ViewModels\WideButtons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+</Project>
