@@ -4,6 +4,9 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
+    <RootNamespace>Calc</RootNamespace>
+    <AssemblyName>Calc</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -13,7 +16,6 @@
   <ItemGroup>
     <Compile Include="..\app\**\*.cs" />
     <Compile Remove="..\app\obj\**" />
-    <Compile Remove="..\app\Properties\AssemblyInfo.cs" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="2.0.1" />
     <PackageReference Include="system.reactive" Version="4.1.2" />
   </ItemGroup>
@@ -21,9 +23,6 @@
     <Resource Include="..\app\Assets\Icon.png" Link="Assets\Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="..\app\MainWindow.xaml" Link="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="..\app\Assets\Styles.xaml" Link="Assets\Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -34,6 +33,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="..\app\ViewModels\WideButtons.xaml" Link="ViewModels\WideButtons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="..\app\Themes\Generic.xaml" Link="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

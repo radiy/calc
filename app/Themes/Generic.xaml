@@ -1,0 +1,85 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Calc.Controls">
+    <Style x:Key="HeaderButton" TargetType="Button">
+        <Setter Property="Padding" Value="18, 9, 18, 10" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#a0D2D2D2" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="CloseButton" TargetType="Button">
+        <Setter Property="Padding" Value="18, 9, 18, 10" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#E81123" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type controls:GlassWindow}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:GlassWindow}">
+                    <Border BorderThickness="1" BorderBrush="Black" Background="{TemplateBinding Background}">
+                        <Grid Margin="0" IsHitTestVisible="True">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock x:Name="PART_Title" Text="{TemplateBinding Title}" Padding="18, 9, 18, 10" />
+                            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                                <Button x:Name="PART_Minimize" Style="{StaticResource HeaderButton}">
+                                    <TextBlock Text="&#xE949;" FontFamily="Segoe MDL2 Assets" FontSize="10" />
+                                </Button>
+
+                                <Button Name="PART_Maximize" Style="{StaticResource HeaderButton}">
+                                    <TextBlock Text="&#xE739;" FontFamily="Segoe MDL2 Assets" FontSize="10" />
+                                </Button>
+
+                                <Button Name="PART_Restore" Style="{StaticResource HeaderButton}">
+                                    <TextBlock Text="&#xE923;" FontFamily="Segoe MDL2 Assets" FontSize="10" />
+                                </Button>
+
+                                <Button Name="PART_Close" Style="{StaticResource CloseButton}">
+                                    <TextBlock Text="&#xE106;" FontFamily="Segoe MDL2 Assets" FontSize="10" />
+                                </Button>
+                            </StackPanel>
+
+                            <ContentPresenter Margin="3" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

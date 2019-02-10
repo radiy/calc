@@ -3,6 +3,38 @@ using System.Runtime.InteropServices;
 
 namespace Calc
 {
+	public enum AccentState
+	{
+		ACCENT_DISABLED = 0,
+		ACCENT_ENABLE_GRADIENT = 1,
+		ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
+		ACCENT_ENABLE_BLURBEHIND = 3,
+		ACCENT_ENABLE_ACRYLICBLURBEHIND = 4,
+		ACCENT_INVALID_STATE = 5
+	}
+
+	[StructLayout(LayoutKind.Sequential)]
+	public struct AccentPolicy
+	{
+		public AccentState AccentState;
+		public uint AccentFlags;
+		public uint GradientColor;
+		public uint AnimationId;
+	}
+
+	[StructLayout(LayoutKind.Sequential)]
+	public struct WindowCompositionAttributeData
+	{
+		public WindowCompositionAttribute Attribute;
+		public IntPtr Data;
+		public int SizeOfData;
+	}
+
+	public enum WindowCompositionAttribute
+	{
+		WCA_ACCENT_POLICY = 19
+	}
+
 	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
 	public class MONITORINFO
 	{
@@ -105,9 +137,9 @@ namespace Calc
 		public static extern bool PostMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
 
 		[DllImport("User32")]
-		internal static extern IntPtr MonitorFromWindow(IntPtr handle, uint flags);
+		public static extern IntPtr MonitorFromWindow(IntPtr handle, uint flags);
 
 		[DllImport("user32")]
-		internal static extern bool GetMonitorInfo(IntPtr hMonitor, MONITORINFO lpmi);
+		public static extern bool GetMonitorInfo(IntPtr hMonitor, MONITORINFO lpmi);
 	}
 }

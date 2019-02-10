@@ -5,6 +5,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
+using System.Windows.Media.Imaging;
+using Calc.Controls;
 using Calc.Helpers;
 using Calc.ViewModels;
 
@@ -23,24 +25,17 @@ namespace Calc
 				Window window;
 				//we use undocumented function for window effect, tested only on windows 10
 				if (Environment.OSVersion.Version < new Version(6, 2))
-				{
-					window = new Window
-					{
-						Content = new StdCalc()
-					};
-				}
+					window = new Window();
 				else
-				{
-					window = new MainWindow();
-					((MainWindow) window).MainContent.Content = new StdCalc();
-				}
-
+					window = new GlassWindow();
+				window.Content = new StdCalc();
 				window.Language = XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.IetfLanguageTag);
 				window.Height = 520;
 				window.Width = 350;
 				window.MinHeight = 520;
 				window.MinWidth = 350;
 				window.Title = "Калькулятор";
+				window.Icon = new BitmapImage(new Uri("pack://application:,,,/Calc;component/Assets/Icon.png"));
 
 
 				var app = new Application();
@@ -52,6 +47,8 @@ namespace Calc
 #if !DEBUG
 				MessageBox.Show(e.ToString(), "Ошибка при запуске приложения", MessageBoxButton.OK,
 					MessageBoxImage.Error);
+#else
+				throw;
 #endif
 			}
 		}

@@ -2,65 +2,59 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using Calc.Controls;
 
-namespace Calc
+namespace Calc.Controls
 {
-	internal enum AccentState
-	{
-		ACCENT_DISABLED = 0,
-		ACCENT_ENABLE_GRADIENT = 1,
-		ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
-		ACCENT_ENABLE_BLURBEHIND = 3,
-		ACCENT_ENABLE_ACRYLICBLURBEHIND = 4,
-		ACCENT_INVALID_STATE = 5
-	}
-
-	[StructLayout(LayoutKind.Sequential)]
-	internal struct AccentPolicy
-	{
-		public AccentState AccentState;
-		public uint AccentFlags;
-		public uint GradientColor;
-		public uint AnimationId;
-	}
-
-	[StructLayout(LayoutKind.Sequential)]
-	public struct WindowCompositionAttributeData
-	{
-		public WindowCompositionAttribute Attribute;
-		public IntPtr Data;
-		public int SizeOfData;
-	}
-
-	public enum WindowCompositionAttribute
-	{
-		// ...
-		WCA_ACCENT_POLICY = 19
-		// ...
-	}
-
-	public partial class MainWindow : Window
+	[
+		TemplatePart(Name = "PART_Title", Type = typeof(TextBlock)),
+		TemplatePart(Name = "PART_Minimize", Type = typeof(Button)),
+		TemplatePart(Name = "PART_Maximize", Type = typeof(Button)),
+		TemplatePart(Name = "PART_Restore", Type = typeof(Button)),
+		TemplatePart(Name = "PART_Close", Type = typeof(Button))
+	]
+	public class GlassWindow : Window
 	{
 		private readonly uint _blurBackgroundColor = 0xededed;
 		private readonly uint _blurOpacity = 50;
-		public Brush activeBrush = new SolidColorBrush(Color.FromArgb(0xc8, 0xed, 0xed, 0xed));
-		private readonly Brush inactiveBrush = new SolidColorBrush(Color.FromArgb(0xff, 0xed, 0xed, 0xed));
+		private Brush activeBrush = new SolidColorBrush(Color.FromArgb(0xc8, 0xed, 0xed, 0xed));
+		private Brush inactiveBrush = new SolidColorBrush(Color.FromArgb(0xff, 0xed, 0xed, 0xed));
+		private Button minimize;
+		private Button closeButton;
+		private Button restore;
+		private Button maximize;
+		private TextBlock title;
 
-		public MainWindow()
+		static GlassWindow()
 		{
-			InitializeComponent();
-			UpdateState();
-			Header.SetBinding(TextBlock.TextProperty, new Binding("Title")
-			{
-				Source = this,
-				BindsDirectlyToSource = true
-			});
+			DefaultStyleKeyProperty.OverrideMetadata(typeof(GlassWindow),
+				new FrameworkPropertyMetadata(typeof(GlassWindow)));
+		}
+
+		public GlassWindow()
+		{
+			AllowsTransparency = true;
+			WindowStyle = WindowStyle.None;
 			Background = activeBrush;
+		}
+
+		public override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+			title = (TextBlock)GetTemplateChild("PART_Title");
+			title.MouseLeftButtonDown += HeaderLeftClick;
+			title.MouseRightButtonDown += ShowSystemMenu;
+			minimize = (Button)GetTemplateChild("PART_Minimize");
+			minimize.Click += ClickMinimize;
+			maximize = (Button)GetTemplateChild("PART_Maximize");
+			maximize.Click += ClickMaximize;
+			restore = (Button)GetTemplateChild("PART_Restore");
+			restore.Click += ClickRestore;
+			closeButton = (Button)GetTemplateChild("PART_Close");
+			closeButton.Click += ClickClose;
+			UpdateState();
 		}
 
 		private void ClickMaximize(object sender, RoutedEventArgs e)
@@ -104,7 +98,6 @@ namespace Calc
 		protected override void OnSourceInitialized(EventArgs e)
 		{
 			base.OnSourceInitialized(e);
-
 			var windowHelper = new WindowInteropHelper(this);
 
 			var accent = new AccentPolicy();
@@ -144,12 +137,12 @@ namespace Calc
 					break;
 			}
 
-			return (IntPtr) 0;
+			return (IntPtr)0;
 		}
 
 		private static void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
 		{
-			var mmi = (MINMAXINFO) Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
+			var mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
 
 			var monitor = WinApi.MonitorFromWindow(hwnd, WinApi.MONITOR_DEFAULTTONEAREST);
 			if (monitor != IntPtr.Zero)
@@ -189,13 +182,13 @@ namespace Calc
 		{
 			if (WindowState == WindowState.Maximized)
 			{
-				Maximize.Visibility = Visibility.Collapsed;
-				Restore.Visibility = Visibility.Visible;
+				maximize.Visibility = Visibility.Collapsed;
+				restore.Visibility = Visibility.Visible;
 			}
 			else
 			{
-				Maximize.Visibility = Visibility.Visible;
-				Restore.Visibility = Visibility.Collapsed;
+				maximize.Visibility = Visibility.Visible;
+				restore.Visibility = Visibility.Collapsed;
 			}
 		}
 
@@ -210,7 +203,7 @@ namespace Calc
 			var hwnd = new WindowInteropHelper(this).Handle;
 			var hmenu = WinApi.GetSystemMenu(hwnd, false);
 			var cmd = WinApi.TrackPopupMenuEx(hmenu, WinApi.TPM_LEFTBUTTON | WinApi.TPM_RETURNCMD,
-				(int) physicalScreenLocation.X, (int) physicalScreenLocation.Y, hwnd, IntPtr.Zero);
+				(int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
 			if (0 != cmd)
 				WinApi.PostMessage(hwnd, WM.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
 		}

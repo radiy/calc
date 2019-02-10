@@ -127,7 +127,7 @@
                     <Setter Property="Background" Value="#80D6D6D6" />
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Foreground" Value="#dedede" />
+                    <Setter Property="Foreground" Value="#B8B8B8" />
                 </Trigger>
             </Style.Triggers>
         </Style>
