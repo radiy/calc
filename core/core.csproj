@@ -1,17 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Wpf">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;CORE</DefineConstants>
   </PropertyGroup>
 
-  <ItemGroup>
-    <FrameworkReference Include="Microsoft.DesktopUI" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="..\app\**\*.cs" />
     <Compile Remove="..\app\obj\**" />
